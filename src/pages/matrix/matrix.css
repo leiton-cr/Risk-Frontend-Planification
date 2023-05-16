@@ -1,0 +1,88 @@
+.matrix {
+    padding: 1em;
+}
+
+.matrix_axis {
+    text-align: center;
+    font-weight: bold;
+}
+
+.matrix_axis:first-child {
+
+    writing-mode: vertical-rl;
+    rotate: 180deg;
+}
+
+.matrix_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.matrix tr td:first-child {
+    font-weight: bolder;
+
+}
+
+.matrix tr td:first-child,
+.matrix tr th {
+    text-align: center;
+    padding: .8em;
+}
+
+
+.mat_cell {
+    width: 300px;
+    height: 100px;
+    box-shadow: 0em 0em 0em rgb(184, 184, 184);
+    transition: scale .2s, box-shadow .2s;
+}
+
+.mat_cell:hover {
+    cursor: pointer;
+    scale: 1.05;
+    box-shadow: .5em .5em .5em rgba(41, 41, 41, 0.356);
+}
+
+.p-1.i-1,
+.p-1.i-2,
+.p-2.i-1 {
+    background-color: #3AB34A;
+}
+
+.p-2.i-2,
+.p-1.i-3,
+.p-3.i-1 {
+    background-color: #2F903B;
+}
+
+.p-4.i-1,
+.p-3.i-2,
+.p-2.i-3,
+.p-1.i-4,
+.p-5.i-1,
+.p-4.i-2,
+.p-3.i-3,
+.p-2.i-4,
+.p-1.i-5{
+    background-color: #F8EB10;
+}
+
+.p-5.i-2,
+.p-4.i-3,
+.p-3.i-4,
+.p-2.i-5{
+    background-color: #F79122;
+}
+
+.p-5.i-3,
+.p-4.i-4,
+.p-3.i-5,
+.p-5.i-4,
+.p-4.i-5 {
+    background-color: #E91720;
+}
+
+.p-5.i-5{
+    background-color: #BB121A;
+}

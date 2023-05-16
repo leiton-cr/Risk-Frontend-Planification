@@ -1,0 +1,27 @@
+.template_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em;
+}
+
+.template_image{
+    width: 75px;
+}
+
+.template_title{
+    display: inline-block;
+}
+
+.header_logo{
+    gap: 1em;
+    display: flex;
+    place-items: flex-end;
+}
+
+.header_logo button{
+    cursor: pointer;
+    background-color: #f6f8fa;
+    border: 1px solid rgb(207, 207, 207);
+    padding: .5em 1em;
+}

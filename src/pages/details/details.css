@@ -1,0 +1,23 @@
+.details_actions{
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+}
+
+.details_actions .action_button{
+    background-color: #f6f8fa;
+    border: 1px solid rgb(207, 207, 207);
+    cursor: pointer;
+    padding: .5em 3em;
+   
+    color: white;
+}
+
+.action_button:last-of-type{
+    background-color: rgb(0, 204, 255);
+}
+
+.action_button:first-of-type{
+    background-color: rgb(247, 128, 92);
+}
