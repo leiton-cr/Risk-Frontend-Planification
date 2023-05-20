@@ -5,6 +5,14 @@
 .matrix_axis {
     text-align: center;
     font-weight: bold;
+    margin-top: 2em;
+}
+
+.card-container-title{
+    text-align: center;
+    font-weight:bold;
+    font-size: 2em;
+    margin-top: 2em
 }
 
 .matrix_axis:first-child {
@@ -33,7 +41,7 @@
 
 .mat_cell {
     width: 300px;
-    height: 100px;
+    height: 13.4vh;
     box-shadow: 0em 0em 0em rgb(184, 184, 184);
     transition: scale .2s, box-shadow .2s;
 }
@@ -43,6 +51,11 @@
     scale: 1.05;
     box-shadow: .5em .5em .5em rgba(41, 41, 41, 0.356);
 }
+
+.mat_cell::active{
+    scale: 11;
+}
+
 
 .p-1.i-1,
 .p-1.i-2,
@@ -85,4 +98,25 @@
 
 .p-5.i-5{
     background-color: #BB121A;
+}
+
+
+.range-1 {
+    border-bottom: 3px solid #3AB34A;
+}
+
+.range-2 {
+    border-bottom: 3px solid #2F903B;
+}
+
+.range-3{
+    border-bottom: 3px solid #F8EB10;
+}
+
+.range-4{
+    border-bottom: 3px solid #F79122;
+}
+
+.range-5 {
+    border-bottom: 3px solid #E91720;
 }

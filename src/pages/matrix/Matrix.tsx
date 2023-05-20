@@ -1,31 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useParams } from "react-router-dom";
+
 import { matrixRowHeaders, matrixcColHeaders } from "../../utils/helpers";
+import RegisterCard from "./components/RegisterCard";
 import "./matrix.css"
-import useAlerts from "../../hooks/useAlerts";
+import useMatrix from "./useMatrix";
+
+import ScrollToTop from "./components/ScrollToTop";
 
 const Matrix = () => {
 
-    const { id } = useParams();
-
-    const {toastAlert} = useAlerts()
-
-    if(!id){
-        toastAlert("No matrix provided", "error")
-    }
-
-    const handleClick = (e: any) => {
-        const probability = e.target.dataset.probability;
-        const impact = e.target.dataset.impact;
-
-        if (probability && impact) {
-            console.log(probability, impact);
-        }
-    }
+    const { handleClick, loadContent, pickedRegisters } = useMatrix();
 
     return (
         <>
-            {id}
+
             <div className="matrix_axis">Impact</div>
             <div className="matrix_container">
                 <div className="matrix_axis">Probability</div>
@@ -39,7 +27,7 @@ const Matrix = () => {
                                 {
                                     [0, 1, 2, 3, 4, 5].map(j => (j == 0) ?
                                         <td key={j}> {matrixcColHeaders[i - 1]} </td> :
-                                        <td key={j} className={`mat_cell p-${i} i-${j}`} data-probability={i} data-impact={j}>{i * j}</td>
+                                        <td key={j} className={`mat_cell p-${i} i-${j}`} data-probability={i} data-impact={j}>{loadContent(i, j)}</td>
                                     )
                                 }
                             </tr>
@@ -47,6 +35,15 @@ const Matrix = () => {
                     </tbody>
                 </table>
             </div>
+
+            {pickedRegisters && (pickedRegisters as any).length > 0 && <div className="card-container-title">Attached registers</div>}
+
+            <div className="register__card-container">
+                {pickedRegisters && (pickedRegisters as any).map((risk: any) => <RegisterCard risk={risk} />)}
+            </div>
+
+            <ScrollToTop />
+
         </>
     )
 }

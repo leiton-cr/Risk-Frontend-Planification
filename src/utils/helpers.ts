@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const emptyRowData = {
     riskDescription: {
         id: "-1",
@@ -61,3 +62,11 @@ export const matrixRowHeaders = [
     "Major",
     "Severe"
 ]
+
+export const getPriority = (register:any) => {
+    return register.priority.value+1;
+}
+
+export const getImpact = (register:any) => {
+    return register.impact.value+1;
+}
