@@ -23,6 +23,7 @@ const useDetails = () => {
     const { id } = useParams();
 
     const handleAdd = () => {
+        alert("hola");
         setRows([...rows, editRow])
         setEditRow(JSON.parse(JSON.stringify(emptyRowData)));
     }
@@ -34,6 +35,8 @@ const useDetails = () => {
     }
 
     const handleInput = (e: FormEvent) => {
+
+        alert("hola");
         if (e.nativeEvent.target) {
             const index = (e.nativeEvent.target as any).selectedIndex;
             if (index) {

@@ -39,7 +39,7 @@ const useFetch = () => {
       return await fetch(url, config).then((data) => data.json());
     };
   
-    return { getData, postData, putData, deleteData };
+    return { getData, postData, putData, deleteData, };
   };
   
   export default useFetch;

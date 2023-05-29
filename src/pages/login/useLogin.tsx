@@ -7,12 +7,13 @@ import useStorage from "../../utils/useStorage"
 import { AuthContext } from "../../contexts/AuthProvider"
 import { useNavigate } from "react-router-dom"
 import useFetch from "../../utils/useFetch"
+import parseJwt from "../../utils/jwt.ts"
 
 const useLogin = () => {
 
     const { login } = useContext(AuthContext);
 
-    const { postData } = useFetch();
+    const { postData, getData } = useFetch();
 
 
     const navigate = useNavigate();
@@ -46,23 +47,41 @@ const useLogin = () => {
                 pass: formData.password
             }
 
-            postData("https://localhost:7071/Auth", user).then(validateLogin).catch(() => {alert("Error on server")});
-            
+            postData("https://localhost:7071/Auth", user).then(validateLogin).catch(() => { alert("Error on server") });
+
         } else {
             alert("Missing email or password")
         }
     }
 
+    const responseGoogleLogin = async (response: any) => {
+
+        const parseResponse = parseJwt(JSON.stringify(response));
+        const result = await getData("https://localhost:7071/Auth/EmailExists/" + parseResponse.email);
+        //save localStorage
+        saveItem("token", result.jwt);
+
+        if (result.jwt) {
+            navigate("/");
+        }
+    };
+    const errorGoogleLogin = () => {
+        // Handle the error here
+        console.log("An error occurred during Google login");
+    };
 
 
-    const validateLogin = (response:any) => {
-        if (response.validation){
+
+
+    const validateLogin = (response: any) => {
+        if (response.validation) {
             login(formData.email, formData.password)
             navigate("/");
-        }else{
+        } else {
             alert("Error on credentials")
         }
     }
+
 
 
     // Main load effect
@@ -82,7 +101,7 @@ const useLogin = () => {
         removetem("remember_me");
     }, [formData]);
 
-    return { inputs, formHandler, handleSubmit }
+    return { inputs, formHandler, handleSubmit, responseGoogleLogin, errorGoogleLogin }
 }
 
 export default useLogin
