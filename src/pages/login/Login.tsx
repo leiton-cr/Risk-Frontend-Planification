@@ -15,7 +15,7 @@ const Login = () => {
 
   return (
     <section className="container py-5  ">
-      <div className="col-md-4 mx-auto shadow p-5 rounded-2">
+      <div className="col-sm-10 col-md-6 col-lg-6 col-xl-4 mx-auto shadow p-5 rounded-2">
         <h1 className="login_title">Sign in</h1>
 
         <form className="mb-3" action="POST" onSubmit={handleSubmit}>

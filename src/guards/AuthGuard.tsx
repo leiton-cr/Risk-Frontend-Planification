@@ -2,7 +2,7 @@
 import { ReactNode, useEffect, useContext } from "react"
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
-import useStorage from "../utils/useStorage";
+import useStorage from "../hooks/useStorage";
 
 
 interface Props {

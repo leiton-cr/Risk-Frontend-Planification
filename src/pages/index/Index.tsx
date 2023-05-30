@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useFetch from "../../utils/useFetch";
+import useFetch from "../../hooks/useFetch";
 
 const Index = () => {
   const { getData } = useFetch();
@@ -76,9 +76,11 @@ const Index = () => {
                       </Link>
                     </td>
                     <td>
+                    <Link to={`/edit/${project.id}`}>
                       <button className="btn btn-warning">
                         <i className="bi bi-pencil-fill"></i>
                       </button>
+                      </Link>
                     </td>
                     <td>
                       <button className="btn btn-danger">

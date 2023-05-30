@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FormEventHandler, useEffect, useState } from "react";
-import useFetch from "../../utils/useFetch";
+import useFetch from "../../hooks/useFetch";
 import Select from "react-select";
 
 interface Props {

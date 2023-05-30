@@ -1,9 +1,7 @@
-import { Detail } from "../models/Detail";
-import { InputData } from "../models/InputData.ts";
-import { Task } from "../models/Task";
+import { Detail } from "../models/Detail.ts";
+import { Task } from "../models/Task.ts";
 
 const useRegister = () => {
-
   const createRegister = (header: any, inputData: any): Task => {
     const newObject: Task = {
       id: "string",
@@ -31,7 +29,7 @@ const useRegister = () => {
     return newObject;
   };
 
-  return {createRegister};
+  return { createRegister };
 };
 
 export default useRegister;

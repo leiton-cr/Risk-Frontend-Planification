@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAlerts from "../../hooks/useAlerts";
-import useFetch from "../../utils/useFetch";
+import useFetch from "../../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 
 const useMatrix = () => {

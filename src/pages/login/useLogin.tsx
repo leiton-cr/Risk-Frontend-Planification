@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FormEvent, useState, useEffect, useContext } from "react";
-import useStorage from "../../utils/useStorage";
+import useStorage from "../../hooks/useStorage.tsx";
 
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import useFetch from "../../utils/useFetch";
+import useFetch from "../../hooks/useFetch.tsx";
 import parseJwt from "../../utils/jwt.ts";
 
 const useLogin = () => {

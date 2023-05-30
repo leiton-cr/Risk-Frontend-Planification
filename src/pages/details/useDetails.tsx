@@ -5,8 +5,8 @@ import { RowData } from "../../models/RowData";
 import { emptyRowData } from "../../utils/helpers";
 import { useNavigate, useParams } from "react-router-dom";
 import useAlerts from "../../hooks/useAlerts";
-import useFetch from "../../utils/useFetch";
-import useRegister from "../../utils/useRegister";
+import useFetch from "../../hooks/useFetch";
+import useRegister from "../../hooks/useRegister";
 
 const useDetails = () => {
   const [actionType, setActionType] = useState("create");
@@ -15,15 +15,15 @@ const useDetails = () => {
   const [editRow, setEditRow] = useState(
     JSON.parse(JSON.stringify(emptyRowData))
   );
-
   const { postData } = useFetch();
-
   const navigate = useNavigate();
-
-  const { promiseAlert } = useAlerts();
+  const { promiseAlert, toastAlert } = useAlerts();
   const { createRegister } = useRegister();
-
   const { id } = useParams();
+
+  useEffect(() => {
+    alert(id);
+  }, []);
 
   const handleAdd = () => {
     setRows([...rows, editRow]);
@@ -75,19 +75,14 @@ const useDetails = () => {
   };
 
   const handleCreate = async () => {
-    // console.log(head);
-    // console.log(rows);
-
-    const register = createRegister(head, rows);
-
-    console.log(register);
-
-    const response = await postData(
-      "https://localhost:7071/Register",
-      register
-    );
-
-    console.log(response);
+    try {
+      const register = createRegister(head, rows);
+      await postData("https://localhost:7071/Register", register);
+      toastAlert("Risk added successfully!", "success");
+    } catch (error) {
+      console.error("An error occurred:", error);
+      toastAlert("Error occurred while adding the risk.", "error");
+    }
   };
 
   const handleCancel = () => {

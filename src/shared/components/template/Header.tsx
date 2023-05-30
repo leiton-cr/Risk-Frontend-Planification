@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import useStorage from "../../../utils/useStorage";
+import useStorage from "../../../hooks/useStorage";
 
 interface Props {
   children: ReactElement;
