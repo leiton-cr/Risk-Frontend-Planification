@@ -25,7 +25,7 @@
     width: 100%;
 }
 
-.google_container button{
+.google_container {
     width: 300px;
     background-color: #8dbceb;
     border: 1px solid rgb(207, 207, 207);
@@ -53,7 +53,7 @@
     translate: 0 -.1em;
 }
 
-.login_form button{
+.login_form {
     background-color: var(--clr-green);
     color: white;
     border-radius: .2em;

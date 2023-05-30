@@ -1,42 +1,43 @@
+import InputGroup from "../../shared/components/InputGroup";
+import useLogin from "./useLogin";
 
-
-import InputGroup from "../../shared/components/InputGroup"
-import useLogin from "./useLogin"
-
-
-import "./login.css"
+import "./login.css";
 import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
-    const { inputs, formHandler, handleSubmit, responseGoogleLogin, errorGoogleLogin} = useLogin();
+  const {
+    inputs,
+    formHandler,
+    handleSubmit,
+    responseGoogleLogin,
+    errorGoogleLogin,
+  } = useLogin();
 
-    return (
-        <section className="login_page">
+  return (
+    <section className="container py-5  ">
+      <div className="col-md-4 mx-auto shadow p-5 rounded-2">
+        <h1 className="login_title">Sign in</h1>
 
-            <div className="login_container">
-                <h1 className="login_title">Sign in</h1>
+        <form className="mb-3" action="POST" onSubmit={handleSubmit}>
+          {inputs.map((i) => (
+            <InputGroup {...i} key={i.id} handler={formHandler}></InputGroup>
+          ))}
 
-                <form className="login_form" action="POST" onSubmit={handleSubmit}>
-                    {inputs.map(i => <InputGroup {...i} key={i.id} handler={formHandler}></InputGroup>)}
+          <div className="d-grid ">
+            <button className="btn btn-primary" type="submit">
+              Sign in
+            </button>
+          </div>
+        </form>
+        <div className="d-flex justify-content-center">
+          <GoogleLogin
+            onSuccess={responseGoogleLogin}
+            onError={errorGoogleLogin}
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
 
-                    <div>
-                        <button type="submit">Sign in</button>
-                    </div>
-                </form>
-            </div>
-
-
-            {/* <div className="google_container">
-                <button>Google</button>
-            </div> */}
-
-            <div className="google_container">
-            <GoogleLogin onSuccess={responseGoogleLogin} onError={errorGoogleLogin} />
-            </div>
-
-
-        </section>
-    )
-}
-
-export default Login
+export default Login;

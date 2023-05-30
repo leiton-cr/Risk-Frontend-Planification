@@ -2,6 +2,8 @@
 import { ReactNode, useEffect, useContext } from "react"
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
+import useStorage from "../utils/useStorage";
+
 
 interface Props {
     children: ReactNode
@@ -9,15 +11,22 @@ interface Props {
 
 const AuthGuard = ({ children }: Props) => {
 
-    const { email } = useContext(AuthContext);
+    const {getItem} = useStorage();
+
+    const { token, login } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!email) {
+
+        const token = getItem("token");
+
+        if (!token) {
             navigate("/login")
+        }else{
+           login(token.token);
         }
-    }, [email])
+    }, [token])
 
 
     return (
