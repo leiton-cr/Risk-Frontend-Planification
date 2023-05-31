@@ -113,11 +113,12 @@ const useDetails = () => {
   };
 
   const handleCreate = async () => {
+    // console.log({...head, ...rows});
     try {
       const register = createRegister(head, rows);
       const url = id
         ? `${ENV.BASE_URL}Register/?id=${id}`
-        : `${ENV.BASE_URL}/Register`;
+        : `${ENV.BASE_URL}Register`;
       await (id
         ? promiseAlert("Are you sure?")
             .then((response) => {
@@ -139,6 +140,11 @@ const useDetails = () => {
 
   const handleCancel = () => {
     if (actionType === "edit") {
+      // if (!hasEditChanges()) {
+      //   navigate(-1);
+      //   return;
+      // }
+
       promiseAlert("Are you sure?", "Unsaved changes will be lost.").then(
         ({ isConfirmed }) => {
           if (isConfirmed) {
@@ -147,6 +153,11 @@ const useDetails = () => {
         }
       );
     } else {
+      // if (!hasCreateChanges()) {
+      //   navigate(-1);
+      //   return;
+      // }
+
       promiseAlert("Are you sure?", "Unsaved changes will be lost.").then(
         ({ isConfirmed }) => {
           if (isConfirmed) {

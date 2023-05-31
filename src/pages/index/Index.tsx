@@ -44,7 +44,7 @@ const Index = () => {
         </Link>
 
         <div className="table-container ">
-          <table className="table table-table-striped table-hover">
+          <table    className="table table-table-striped table-hover">
             <thead className="bg-dark text-white">
               <tr>
                 {tableHeaders.map((hader, i) => (
@@ -52,7 +52,7 @@ const Index = () => {
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {paginateProject.map((project: any, index) => (
                 <tr key={index}>
                   <td>{project.id}</td>
