@@ -26,13 +26,13 @@ const useLogin = () => {
 
   const inputs = [
     {
-      id: "Email",
+      id: "email",
       inputType: "text",
       state: formData.email,
       placeholder: "JohnDoe@domain.com",
     },
     {
-      id: "Password",
+      id: "password",
       inputType: "password",
       state: formData.password,
       placeholder: "********",
@@ -95,7 +95,7 @@ const useLogin = () => {
   };
   const errorGoogleLogin = () => {
     // Handle the error here
-    console.log("An error occurred during Google login");
+    alert("An error occurred during Google login");
   };
 
   const validateLogin = (response: any) => {

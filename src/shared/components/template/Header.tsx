@@ -8,9 +8,9 @@ interface Props {
 }
 
 const Header = ({ title, children,icon}: Props) => {
-  const { getItem } = useStorage();
+  //const { getItem } = useStorage();
 
-  const token = getItem("token");
+  //const token = getItem("token");
 
   return (
     <>

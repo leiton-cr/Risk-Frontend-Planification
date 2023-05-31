@@ -16,7 +16,7 @@ export default function PaginationCustom({
 }: PaginationCustomProps) {
   const [currentPage, setCurrentPage] = useState<number>(1);
   let startPage: number, endPage: number, records: number;
-  const [defaultStyle, setDefaultStyle] = useState("btn btn-primary btn-sm me-1");
+  const [defaultStyle] = useState("btn btn-secondary border border-0 btn-sm me-1");
   records = totalResult;
 
   totalResult = Math.ceil(totalResult / 10);

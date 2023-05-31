@@ -1,6 +1,5 @@
 import { Detail } from "../models/Detail.ts";
 import { InputData } from "../models/InputData.ts";
-import { RowData } from "../models/RowData.ts";
 import { Task } from "../models/Task.ts";
 
 const useRegister = () => {

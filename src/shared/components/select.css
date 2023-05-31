@@ -1,0 +1,4 @@
+.option-hover:hover {
+    background-color: yellow; /* Cambia el color de fondo al pasar el cursor sobre la opción */
+    color: rgb(197, 17, 17); /* Cambia el color de texto al pasar el cursor sobre la opción */
+  }

@@ -1,63 +1,5 @@
-// import FetchSelect from "../../shared/components/FetchSelect"
-// import TableHead from "../../shared/components/TableHead"
-// import DataRow from "./components/DataRow"
-// import InputsRow from "./components/InputsRow"
-// import { creationHeaders } from "../../utils/helpers"
-
-// import "./details.css"
-// import useDetails from "./useDetails"
-
-// const Details = () => {
-
-//     const { hasChanges, editRow, actionType, rows, head, handleHead, handleCancel, handleAdd, handleInput, handleDelete, handleCreate, handlePoints } = useDetails();
-
-//     return (
-//         <div>
-
-//             <div className="d-flex p-3 justify-content-center">
-//                 <button className="btn btn-danger" onClick={handleCancel}>Cancel</button>
-//                 <button className="btn btn-primary" onClick={handleCreate}>{actionType == "edit" ? "Update" : "Create"}</button>
-//             </div>
-
-//             {
-//                 (hasChanges()) && <>Changes pending to be saved...</>
-//             }
-
-//             <div className="">
-//                 <div>
-//                     <label htmlFor="project">Project Name </label>
-//                     <FetchSelect state={head.project} id="project" onInput={handleHead} />
-//                 </div>
-
-//                 <div>
-//                     <label htmlFor="project">Task Name </label>
-//                     <input type="text" id="task" value={head.task} onInput={handleHead} />
-//                 </div>
-//             </div>
-
-//             <div className="">
-//                 <table>
-//                     <TableHead headers={creationHeaders} />
-//                     <tbody>
-//                         <InputsRow state={editRow} handleAdd={handleAdd} handleInput={handleInput} handlePoints={handlePoints} />
-
-//                         {
-//                             rows.map((row, i) => <DataRow index={i} key={i} data={row} handleDelete={handleDelete} />)
-//                         }
-
-//                     </tbody>
-//                 </table>
-//             </div>
-
-//         </div>
-//     )
-// }
-
-// export default Details
-
 import FetchSelect from "../../shared/components/FetchSelect";
 import TableHead from "../../shared/components/TableHead";
-import DataRow from "./components/DataRow";
 import InputsRow from "./components/InputsRow";
 import { creationHeaders } from "../../utils/helpers";
 import "./details.css";
@@ -67,7 +9,6 @@ import { Link } from "react-router-dom";
 const Details = () => {
   const {
     hasChanges,
-    editRow,
     actionType,
     rows,
     head,
@@ -96,7 +37,7 @@ const Details = () => {
 
             <button className="btn btn-primary ms-2" onClick={handleCreate}>
               {actionType === "edit" ? "Update" : "Create"}{" "}
-              <i className="bi bi-plus-lg"></i>
+              <i className="bi bi-arrow-up-circle"></i>
             </button>
           </div>
         </div>
@@ -149,7 +90,7 @@ const Details = () => {
           }}
           onClick={handleAdd}
         >
-          Add
+          New Risk <i className=" fa-1x bi bi-plus-circle"></i>
         </button>
       </div>
 
@@ -157,26 +98,11 @@ const Details = () => {
         <table className="table  table-responsive">
           <TableHead headers={creationHeaders} />
           <tbody className="table table-hover">
-            {/* <InputsRow
-              state={editRow}
-              handleAdd={handleAdd}
-              handleInput={handleInput}
-              handlePoints={handlePoints}
-              index={0}
-              
-            /> */}
-
             {rows.map((row, i) => (
-              // <DataRow
-              //   index={i}
-              //   key={i}
-              //   data={row}
-              //   handleDelete={handleDelete}
-              // />
               <InputsRow
                 state={row}
-                handleAdd={handleAdd}
                 handleInput={handleInput}
+                handleDelete={handleDelete}
                 index={i}
               />
             ))}

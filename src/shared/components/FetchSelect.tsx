@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FormEventHandler, useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
-import Select from "react-select";
 
 interface Props {
   id: string;
@@ -51,3 +50,60 @@ const FetchSelect = ({ id, state, onInput, size}: Props) => {
 };
 
 export default FetchSelect;
+// import { FormEventHandler, useEffect, useState } from "react";
+// import useFetch from "../../hooks/useFetch";
+// import Select from "react-select";
+// import { CSSProperties } from "react";
+
+// interface Option {
+//   id: string;
+//   name: string;
+// }
+
+// interface Props {
+//   id: string;
+//   state: string;
+//   onInput: FormEventHandler;
+//   size?: string;
+// }
+
+// const pluralizeMap: any = {
+//   impact: "impacts",
+//   priority: "priorities",
+//   probability: "probabilities",
+//   project: "projects",
+// };
+
+// const FetchSelect = ({ id, state, onInput, size }: Props) => {
+//   const pluralId = pluralizeMap[id];
+//   console.log(pluralId);
+
+//   const { getData } = useFetch();
+//   const [options, setOptions] = useState<Option[]>([]);
+
+//   const updatedOptionsx = options.map((option) => ({
+//     value: option.id,
+//     label: option.name,
+//   }));
+
+//   console.log(updatedOptionsx);
+
+//   useEffect(() => {
+//     getData(`https://localhost:7071/${pluralId}`).then((response: Option[]) => {
+//       setOptions(response);
+//     });
+//   }, []);
+
+//   return (
+//     <div style={{ width: size }}>
+//       <Select
+//         value={state}
+//         onChange={() => onInput}
+//         id={id}
+//         options={updatedOptionsx}
+//         placeholder={`Select ${id}`}
+//       />
+//     </div>
+//   );
+// };
+

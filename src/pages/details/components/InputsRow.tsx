@@ -1,67 +1,17 @@
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// /* eslint-disable @typescript-eslint/ban-types */
-
-// import { FormEventHandler, MouseEventHandler } from "react"
-// import FetchSelect from "../../../shared/components/FetchSelect"
-
-// interface Props{
-//     handleAdd: MouseEventHandler<HTMLButtonElement>,
-//     handleInput: FormEventHandler,
-//     handlePoints:FormEventHandler,
-//     state: any
-// }
-
-// const InputsRow = ({state, handleAdd, handleInput, handlePoints}: Props) => {
-
-//     return (
-//         <tr>
-//             <td>
-//                 <input id="riskDescription"  value={state.riskDescription.val} onInput={handleInput}></input>
-//             </td>
-//             <td>
-//                 <input id="impactDescription" value={state.impactDescription.val} onInput={handleInput}></input>
-//             </td>
-//             <td>
-//                <FetchSelect state={state.probability.id} id="probability" onInput={handleInput}/>
-//             </td>
-//             <td>
-//                 <FetchSelect state={state.impact.id} id="impact" onInput={handleInput}/>
-//             </td>
-//             <td>
-//                 <input id="owner" value={state.owner.val} onInput={handleInput}></input>
-//             </td>
-//             <td>
-//                 <input id="responsePlan" value={state.responsePlan.val} onInput={handleInput}></input>
-//             </td>
-//             <td>
-//                 <FetchSelect state={state.priority.id} id="priority" onInput={handleInput}/>
-//             </td>
-//             <td>
-//                 <input readOnly={true} value={state.points.val} onInput={handlePoints}></input>
-//             </td>
-//             <td>
-//                 <button onClick={handleAdd}>Add</button>
-//             </td>
-//         </tr>
-//     )
-// }
-
-// export default InputsRow
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { FormEventHandler, MouseEventHandler } from "react";
+import { FormEventHandler } from "react";
 import FetchSelect from "../../../shared/components/FetchSelect";
 import "../details.css";
 
 interface Props {
-  handleAdd: MouseEventHandler<HTMLButtonElement>;
+  handleDelete: any;
   handleInput: FormEventHandler;
   state: any;
   index: Number;
 }
 
-const InputsRow = ({ state, handleAdd, handleInput, index }: Props) => {
+const InputsRow = ({ state, handleInput, handleDelete, index }: Props) => {
   return (
     <tr data-key={index}>
       <td>
@@ -69,8 +19,8 @@ const InputsRow = ({ state, handleAdd, handleInput, index }: Props) => {
           style={{ width: "200px" }}
           id="riskDescription"
           className="form-control"
-          value={state.riskDescription.val }
-          onInput={handleInput }
+          value={state.riskDescription.val}
+          onInput={handleInput}
           placeholder="Describe the risk..."
         />
       </td>
@@ -89,7 +39,7 @@ const InputsRow = ({ state, handleAdd, handleInput, index }: Props) => {
           state={state.probability.id}
           id="probability"
           onInput={handleInput}
-          size={"160px"}
+          size={"200px"}
         />
       </td>
       <td>
@@ -97,7 +47,7 @@ const InputsRow = ({ state, handleAdd, handleInput, index }: Props) => {
           state={state.impact.id}
           id="impact"
           onInput={handleInput}
-          size={"150px"}
+          size={"200px"}
         />
       </td>
       <td>
@@ -125,7 +75,7 @@ const InputsRow = ({ state, handleAdd, handleInput, index }: Props) => {
           state={state.priority.val}
           id="priority"
           onInput={handleInput}
-          size={"150px"}
+          size={"200px"}
         />
       </td>
       <td>
@@ -136,22 +86,19 @@ const InputsRow = ({ state, handleAdd, handleInput, index }: Props) => {
           value={state.points.val}
         />
       </td>
-      {/* <td>
+      <td className="sticky-delete  bg-light">
         <button
-          
+          onClick={() => handleDelete(index, state.id)}
           style={{
-            backgroundColor: "#0c6efd",
+            backgroundColor: "#e13647",
             border: "none",
             borderRadius: "5px",
             color: "white",
-            position: "sticky",
-            right: "0",
           }}
-          onClick={handleAdd}
         >
-          Add
+          <i className="bi bi-trash-fill"></i>
         </button>
-      </td> */}
+      </td>
     </tr>
   );
 };
