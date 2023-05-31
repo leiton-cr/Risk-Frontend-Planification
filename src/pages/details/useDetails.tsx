@@ -10,20 +10,44 @@ import useRegister from "../../hooks/useRegister";
 
 const useDetails = () => {
   const [actionType, setActionType] = useState("create");
-  const [head, setHead] = useState({ project: "-1", task: "" });
-  const [rows, setRows] = useState(Array<RowData>);
+  const [head, setHead] = useState({
+    project: "-1",
+    taskDescription: "",
+    taskId: "",
+    id: "",
+  });
+  const [rows, setRows] = useState(Array<any>);
+  const [hasChanges, setHasChanges] = useState(false);
   const [editRow, setEditRow] = useState(
     JSON.parse(JSON.stringify(emptyRowData))
   );
-  const { postData } = useFetch();
+  const { postData, getData, putData } = useFetch();
   const navigate = useNavigate();
   const { promiseAlert, toastAlert } = useAlerts();
-  const { createRegister } = useRegister();
+  const { createRegister, editRegister } = useRegister();
   const { id } = useParams();
 
   useEffect(() => {
-    alert(id);
+    if (id) {
+      const fetchData = async () => {
+        const response = await getData(`https://localhost:7071/Register/${id}`);
+        const { head, rows } = editRegister(response);
+        setHead(head);
+        setRows(rows);
+      };
+
+      fetchData();
+    }
+  }, [setRows]);
+
+  useEffect(() => {
+    if (id) {
+      setActionType("edit");
+    }
+    setRows([emptyRowData]);
   }, []);
+
+  useEffect(() => {}, [editRow.probability, editRow.impact]);
 
   const handleAdd = () => {
     setRows([...rows, editRow]);
@@ -37,60 +61,101 @@ const useDetails = () => {
   };
 
   const handleInput = (e: FormEvent) => {
+    setHasChanges(true);
+    const rowIndex = Number(e.currentTarget.closest("tr")?.dataset.key);
     if (e.nativeEvent.target) {
       const index = (e.nativeEvent.target as any).selectedIndex;
+
       if (index) {
         const value = (e.nativeEvent.target as any)[index].text;
-        return setEditRow({
-          ...editRow,
-          [e.currentTarget.id]: {
+        rows[rowIndex][e.currentTarget.id] = {
+          id: (e.target as HTMLInputElement).value,
+          val: value,
+        };
+
+        if (
+          e.currentTarget.id === "probability" ||
+          e.currentTarget.id === "impact"
+        ) {
+          rows[rowIndex]["points"] = {
             id: (e.target as HTMLInputElement).value,
-            val: value,
-          },
-        });
+            val: rows[rowIndex]["probability"].id * rows[rowIndex]["impact"].id,
+          };
+          return setRows([...rows]);
+        }
       }
     }
 
-    setEditRow({
-      ...editRow,
-      [e.currentTarget.id]: {
-        id: "",
-        val: (e.target as HTMLInputElement).value,
-      },
-    });
-  };
-
-  const handlePoints = () => {
-    setEditRow({
-      ...editRow,
-      points: { id: "", val: editRow.probability.id * editRow.impact.id },
-    });
+    rows[rowIndex][e.currentTarget.id] = {
+      id: "",
+      val: (e.target as HTMLInputElement).value,
+    };
+    setRows([...rows]);
   };
 
   const handleHead = (e: FormEvent) => {
+    setHasChanges(true);
     setHead({
       ...head,
       [e.currentTarget.id]: (e.target as HTMLInputElement).value,
     });
   };
 
+  // const handleCreate = async () => {
+  //   if (id) {
+  //     const updatedData = createRegister(head, rows);
+  //     const response = await putData(
+  //       `https://localhost:7071/Register/?id=${id}`,
+  //       updatedData
+  //     );
+  //     if (response) {
+  //       toastAlert("Risk added successfully!", "success");
+  //     }
+  //   } else {
+  //     try {
+  //       const register = createRegister(head, rows);
+  //       const response = await postData(
+  //         "https://localhost:7071/Register",
+  //         register
+  //       );
+  //       if (response) {
+  //         toastAlert("Risk added successfully!", "success");
+  //       }
+  //     } catch (error) {
+  //       console.error("An error occurred:", error);
+  //       toastAlert("Error occurred while adding the risk.", "error");
+  //     }
+  //   }
+  //   setHasChanges(false);
+  // };
+
   const handleCreate = async () => {
     try {
       const register = createRegister(head, rows);
-      await postData("https://localhost:7071/Register", register);
-      toastAlert("Risk added successfully!", "success");
+      const url = id
+        ? `https://localhost:7071/Register/?id=${id}`
+        : "https://localhost:7071/Register";
+      const response = await (id
+        ? putData(url, register)
+        : postData(url, register));
+
+      if (response) {
+        toastAlert("Risk added successfully!", "success");
+      }
     } catch (error) {
       console.error("An error occurred:", error);
       toastAlert("Error occurred while adding the risk.", "error");
+    } finally {
+      setHasChanges(false);
     }
   };
 
   const handleCancel = () => {
     if (actionType === "edit") {
-      if (!hasEditChanges()) {
-        navigate(-1);
-        return;
-      }
+      // if (!hasEditChanges()) {
+      //   navigate(-1);
+      //   return;
+      // }
 
       promiseAlert("Are you sure?", "Unsaved changes will be lost.").then(
         ({ isConfirmed }) => {
@@ -100,10 +165,10 @@ const useDetails = () => {
         }
       );
     } else {
-      if (!hasCreateChanges()) {
-        navigate(-1);
-        return;
-      }
+      // if (!hasCreateChanges()) {
+      //   navigate(-1);
+      //   return;
+      // }
 
       promiseAlert("Are you sure?", "Unsaved changes will be lost.").then(
         ({ isConfirmed }) => {
@@ -115,27 +180,17 @@ const useDetails = () => {
     }
   };
 
-  const hasChanges = () => {
-    return actionType == "edit" ? hasEditChanges() : hasCreateChanges();
-  };
+  // const hasChanges = () => {
+  //   return actionType == "edit" ? hasEditChanges() : hasCreateChanges();
+  // };
 
-  const hasCreateChanges = () => {
-    return !(rows.length == 0 && head.project === "-1" && head.task === "");
-  };
+  // const hasCreateChanges = () => {
+  //   return !(rows.length == 0 && head.project === "-1" && head.task === "");
+  // };
 
-  const hasEditChanges = () => {
-    return !(rows.length == 0 && head.project === "-1" && head.task === "");
-  };
-
-  useEffect(() => {
-    if (id) {
-      setActionType("edit");
-    }
-  }, []);
-
-  useEffect(() => {
-    handlePoints();
-  }, [editRow.probability, editRow.impact]);
+  // const hasEditChanges = () => {
+  //   return !(rows.length == 0 && head.project === "-1" && head.task === "");
+  // };
 
   return {
     hasChanges,
@@ -149,7 +204,6 @@ const useDetails = () => {
     handleInput,
     handleDelete,
     handleCreate,
-    handlePoints,
   };
 };
 

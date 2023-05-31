@@ -77,12 +77,11 @@ const Details = () => {
     handleInput,
     handleDelete,
     handleCreate,
-    handlePoints,
   } = useDetails();
 
   return (
     <div className="container-fluid col-md-10">
-      <div className="d-flex p-3 flex-column">
+      <div className="d-flex py-3 flex-column">
         <div className="d-flex justify-content-between">
           <Link to="/">
             <button className="btn btn-dark">
@@ -103,7 +102,7 @@ const Details = () => {
         </div>
 
         <div className="d-flex justify-content-end">
-          {hasChanges() && (
+          {hasChanges && (
             <span className="blink-text">Changes pending to be saved...</span>
           )}
         </div>
@@ -130,32 +129,55 @@ const Details = () => {
               type="text"
               className="form-control"
               placeholder="Create risk crud..."
-              id="task"
-              value={head.task}
+              id="taskDescription"
+              value={head.taskDescription}
               onInput={handleHead}
             />
           </div>
         </div>
         <hr></hr>
+
+        <button
+        className="btn btn-primary"
+          style={{
+            backgroundColor: "#0c6efd",
+            border: "none",
+            borderRadius: "5px",
+            color: "white",
+            position: "sticky",
+            right: "0",
+          }}
+          onClick={handleAdd}
+        >
+          Add
+        </button>
       </div>
 
       <div className="table-container">
         <table className="table  table-responsive">
           <TableHead headers={creationHeaders} />
           <tbody className="table table-hover">
-            <InputsRow
+            {/* <InputsRow
               state={editRow}
               handleAdd={handleAdd}
               handleInput={handleInput}
               handlePoints={handlePoints}
-            />
+              index={0}
+              
+            /> */}
 
             {rows.map((row, i) => (
-              <DataRow
+              // <DataRow
+              //   index={i}
+              //   key={i}
+              //   data={row}
+              //   handleDelete={handleDelete}
+              // />
+              <InputsRow
+                state={row}
+                handleAdd={handleAdd}
+                handleInput={handleInput}
                 index={i}
-                key={i}
-                data={row}
-                handleDelete={handleDelete}
               />
             ))}
           </tbody>

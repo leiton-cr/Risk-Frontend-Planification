@@ -2,11 +2,11 @@ import { useContext, ReactElement } from "react";
 import "./template.css";
 import icon from "/app_ico.png";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import Header from "./header";
+import Header from "./Header";
 
 interface Props {
   title: string;
-  icon:string
+  icon: string;
   children: ReactElement;
 }
 

@@ -7,6 +7,7 @@ interface Props {
 }
 
 const DataRow = ({ index, data, handleDelete }: Props) => {
+
   return (
     <tr>
       {Object.values(data).map((value: any, i) => (

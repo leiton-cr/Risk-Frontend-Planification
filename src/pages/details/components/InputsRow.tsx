@@ -57,20 +57,20 @@ import "../details.css";
 interface Props {
   handleAdd: MouseEventHandler<HTMLButtonElement>;
   handleInput: FormEventHandler;
-  handlePoints: FormEventHandler;
   state: any;
+  index: Number;
 }
 
-const InputsRow = ({ state, handleAdd, handleInput, handlePoints }: Props) => {
+const InputsRow = ({ state, handleAdd, handleInput, index }: Props) => {
   return (
-    <tr>
+    <tr data-key={index}>
       <td>
         <input
           style={{ width: "200px" }}
           id="riskDescription"
           className="form-control"
-          value={state.riskDescription.val}
-          onInput={handleInput}
+          value={state.riskDescription.val }
+          onInput={handleInput }
           placeholder="Describe the risk..."
         />
       </td>
@@ -122,7 +122,7 @@ const InputsRow = ({ state, handleAdd, handleInput, handlePoints }: Props) => {
       </td>
       <td>
         <FetchSelect
-          state={state.priority.id}
+          state={state.priority.val}
           id="priority"
           onInput={handleInput}
           size={"150px"}
@@ -134,10 +134,9 @@ const InputsRow = ({ state, handleAdd, handleInput, handlePoints }: Props) => {
           readOnly={true}
           className="form-control"
           value={state.points.val}
-          onInput={handlePoints}
         />
       </td>
-      <td>
+      {/* <td>
         <button
           
           style={{
@@ -152,7 +151,7 @@ const InputsRow = ({ state, handleAdd, handleInput, handlePoints }: Props) => {
         >
           Add
         </button>
-      </td>
+      </td> */}
     </tr>
   );
 };

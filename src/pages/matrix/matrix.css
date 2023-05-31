@@ -44,12 +44,14 @@
     height: 13.4vh;
     box-shadow: 0em 0em 0em rgb(184, 184, 184);
     transition: scale .2s, box-shadow .2s;
+    border: solid 1px white;
 }
 
 .mat_cell:hover {
     cursor: pointer;
     scale: 1.05;
     box-shadow: .5em .5em .5em rgba(41, 41, 41, 0.356);
+    border: solid 3px white;
 }
 
 .mat_cell::active{

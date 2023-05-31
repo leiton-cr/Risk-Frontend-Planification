@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import PaginationCustom from "../details/components/Pagination";
 
 const Index = () => {
   const { getData } = useFetch();
   const [project, setProjects] = useState([]);
+  const [activePage, setActivePage] = useState(1);
 
   const totalPoints = (projects: any) => {
     return projects.tblDetails.reduce(
@@ -26,6 +28,10 @@ const Index = () => {
     "DELETE",
   ];
 
+  const clickPage = (index: any) => {
+    console.log(index);
+  };
+
   useEffect(() => {
     getData(`https://localhost:7071/Register`).then((response) => {
       setProjects(response);
@@ -34,19 +40,15 @@ const Index = () => {
   return (
     <>
       <div className="container-fluid px-5">
-        <div>
-          <div className="my-3">
-            <h4>RISK REGISTER</h4>
-          </div>
-          <div>
-            <Link to={"/create"}>
-              {" "}
-              <button className="mb-3 btn btn-primary btn-block">
-                Add New Task <i className="bi bi-plus-lg"></i>
-              </button>
-            </Link>
-          </div>
+        <div className="my-3">
+          <h4>RISK REGISTER</h4>
         </div>
+        <Link to={"/create"}>
+          <button className="mb-3 btn btn-primary btn-block">
+            Add New Task <i className="bi bi-plus-lg"></i>
+          </button>
+        </Link>
+
         <div className="table-container">
           <table className="table table-table-striped table-hover">
             <thead className="bg-dark text-white">
@@ -71,15 +73,15 @@ const Index = () => {
                     <td>
                       <Link to={`/matrix/${project.id}`}>
                         <button className="btn btn-primary">
-                        <i className="bi bi-grid-fill"></i>
+                          <i className="bi bi-grid-fill"></i>
                         </button>
                       </Link>
                     </td>
                     <td>
-                    <Link to={`/edit/${project.id}`}>
-                      <button className="btn btn-warning">
-                        <i className="bi bi-pencil-fill"></i>
-                      </button>
+                      <Link to={`/edit/${project.id}`}>
+                        <button className="btn btn-warning">
+                          <i className="bi bi-pencil-fill"></i>
+                        </button>
                       </Link>
                     </td>
                     <td>
@@ -92,6 +94,15 @@ const Index = () => {
               ))}
             </tbody>
           </table>
+          <div>
+            {/* totalresult project.details.length() */}
+            <PaginationCustom
+              totalResult={100}
+              maxButtons={5}
+              onPageChange={clickPage}
+              activePage={activePage}
+            />
+          </div>
         </div>
       </div>
 

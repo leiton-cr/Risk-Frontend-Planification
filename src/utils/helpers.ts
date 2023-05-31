@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const emptyRowData = {
+export const emptyRowData =  {
     riskDescription: {
         id: "-1",
         val: ""
@@ -43,7 +43,6 @@ export const creationHeaders = [
     "Response Plan ",
     "Priority ",
     "Points ",
-    "Actions ",
 ]
 
 export const matrixcColHeaders = [

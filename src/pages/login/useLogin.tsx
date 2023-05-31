@@ -38,7 +38,6 @@ const useLogin = () => {
       placeholder: "********",
     },
     { id: "remember_me", inputType: "checkbox", state: formData.remember_me },
-
   ];
 
   const formHandler = (e: FormEvent) => {
@@ -131,7 +130,7 @@ const useLogin = () => {
     handleSubmit,
     responseGoogleLogin,
     errorGoogleLogin,
-    checkHandler
+    checkHandler,
   };
 };
 
