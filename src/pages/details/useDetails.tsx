@@ -37,6 +37,8 @@ const useDetails = () => {
       };
 
       fetchData();
+    } else {
+      // setRows([emptyRowData]);
     }
   }, [setRows]);
 
@@ -113,22 +115,24 @@ const useDetails = () => {
   };
 
   const handleCreate = async () => {
-    // console.log({...head, ...rows});
     try {
       const register = createRegister(head, rows);
       const url = id
         ? `${ENV.BASE_URL}Register/?id=${id}`
         : `${ENV.BASE_URL}Register`;
       await (id
-        ? promiseAlert("Are you sure?")
-            .then((response) => {
-              response.isConfirmed && putData(url, register);
-            })
-            .finally(() => {
-              toastAlert("Risk updated successfully!", "success");
-            })
-        : postData(url, register).then(() => {
-            toastAlert("Risk Create successfully!", "success");
+        ? promiseAlert("Are you sure?").then((response) => {
+            response.isConfirmed &&
+              putData(url, register).then((res) => {
+                res.errors
+                  ? toastAlert(res.title, "error")
+                  : toastAlert("Risk updated successfully!", "success");
+              });
+          })
+        : postData(url, register).then((res) => {
+            res.errors
+              ? toastAlert(res.title, "error")
+              : toastAlert("Risk Create successfully!", "success");
           }));
     } catch (error) {
       console.error("An error occurred:", error);
@@ -148,6 +152,8 @@ const useDetails = () => {
       promiseAlert("Are you sure?", "Unsaved changes will be lost.").then(
         ({ isConfirmed }) => {
           if (isConfirmed) {
+            setRows([emptyRowData]);
+            setEditRow([]);
             navigate("/");
           }
         }
@@ -160,6 +166,8 @@ const useDetails = () => {
 
       promiseAlert("Are you sure?", "Unsaved changes will be lost.").then(
         ({ isConfirmed }) => {
+          setRows([emptyRowData]);
+          setEditRow([]);
           if (isConfirmed) {
             navigate("/");
           }

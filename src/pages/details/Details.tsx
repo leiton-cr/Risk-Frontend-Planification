@@ -4,7 +4,7 @@ import InputsRow from "./components/InputsRow";
 import { creationHeaders } from "../../utils/helpers";
 import "./details.css";
 import useDetails from "./useDetails";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Details = () => {
   const {
@@ -20,15 +20,15 @@ const Details = () => {
     handleCreate,
   } = useDetails();
 
+  const navigate = useNavigate();
+
   return (
     <div className="container-fluid col-md-10">
       <div className="d-flex py-3 flex-column">
         <div className="d-flex justify-content-between">
-          <Link to="/">
-            <button className="btn btn-dark">
-              <i className="bi bi-arrow-left"></i> Back
-            </button>
-          </Link>
+          <button onClick={() => navigate("/")} className="btn btn-dark">
+            <i className="bi bi-arrow-left"></i> Back
+          </button>
 
           <div>
             <button className="btn btn-danger" onClick={handleCancel}>
@@ -79,7 +79,7 @@ const Details = () => {
         <hr></hr>
 
         <button
-        className="btn btn-primary"
+          className="btn btn-primary"
           style={{
             backgroundColor: "#0c6efd",
             border: "none",

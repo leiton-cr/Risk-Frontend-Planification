@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import PaginationCustom from "../details/components/Pagination";
 import { tableHeaders, totalPoints, ENV } from "../../utils/helpers";
@@ -55,11 +55,11 @@ const Index = () => {
         <div className="my-3">
           <h4>RISK REGISTER</h4>
         </div>
-        <Link to={"/create"}>
-          <button className="mb-3 btn btn-primary btn-block">
+        {/* hice esto por que el rows de useDetails siempre mantenia datos ya sea al darle cancel o back y al volver a ingresar persistian los datos en el rows, intente pasarle array vacio setRows([]) y nada */}
+          <button onClick={() => window.location.href = "/create"} className="mb-3 btn btn-primary btn-block">
             Add New Task <i className="bi bi-plus-lg"></i>
           </button>
-        </Link>
+        
 
         <div className="table-container ">
           <table className="table table-table-striped table-hover">
