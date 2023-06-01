@@ -2,16 +2,25 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import PaginationCustom from "../details/components/Pagination";
-import { tableHeaders, totalPoints, ENV} from "../../utils/helpers";
+import { tableHeaders, totalPoints, ENV } from "../../utils/helpers";
+import useAlerts from "../../hooks/useAlerts";
 
 const Index = () => {
-  const { getData } = useFetch();
+  const { getData, deleteData } = useFetch();
   const [project, setProjects] = useState([]);
   const [paginateProject, setPaginateProject] = useState([]);
   const [activePage] = useState(1);
+  const { promiseAlert, toastAlert } = useAlerts();
 
   const clickPage = (index: any) => {
     setPaginateProject(paginateJSON(project, index));
+  };
+
+  const fetchData = async () => {
+    await getData(`${ENV.BASE_URL}Register`).then((response) => {
+      setProjects(response);
+      setPaginateProject(paginateJSON(response, 1));
+    });
   };
 
   const paginateJSON = (jsonData: any, page: number = 1) => {
@@ -25,12 +34,21 @@ const Index = () => {
     return jsonData.slice(startIndex, endIndex);
   };
 
+  const handleDelete = async (id: Number) => {
+    promiseAlert("Are you sure?", "This record will be deleted").then(
+      async (response) => {
+        if (response.isConfirmed) {
+          toastAlert("Risk Delete Successfully!!", "success");
+          await deleteData(`${ENV.BASE_URL}Register?id=${id}`);
+          fetchData();
+        }
+      }
+    );
+  };
+
   useEffect(() => {
-    getData(`${ENV.BASE_URL}Register`).then((response) => {
-      setProjects(response);
-      setPaginateProject(paginateJSON(response, 1));
-    });
-  }, []);
+    fetchData();
+  }, [project]);
   return (
     <>
       <div className="container-fluid px-5">
@@ -44,7 +62,7 @@ const Index = () => {
         </Link>
 
         <div className="table-container ">
-          <table    className="table table-table-striped table-hover">
+          <table className="table table-table-striped table-hover">
             <thead className="bg-dark text-white">
               <tr>
                 {tableHeaders.map((hader, i) => (
@@ -52,7 +70,7 @@ const Index = () => {
                 ))}
               </tr>
             </thead>
-            <tbody >
+            <tbody>
               {paginateProject.map((project: any, index) => (
                 <tr key={index}>
                   <td>{project.id}</td>
@@ -78,7 +96,10 @@ const Index = () => {
                     </Link>
                   </td>
                   <td className="">
-                    <button className="btn btn-danger">
+                    <button
+                      onClick={() => handleDelete(project.id)}
+                      className="btn btn-danger"
+                    >
                       <i className="bi bi-trash3"></i>
                     </button>
                   </td>
