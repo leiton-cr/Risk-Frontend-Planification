@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import PaginationCustom from "../details/components/Pagination";
 import { tableHeaders, totalPoints, ENV } from "../../utils/helpers";
 import useAlerts from "../../hooks/useAlerts";
+import Search from "../search/Search";
+import useSearch from "../search/useSearch";
 
 const Index = () => {
   const { getData, deleteData } = useFetch();
@@ -11,6 +13,14 @@ const Index = () => {
   const [paginateProject, setPaginateProject] = useState([]);
   const [activePage] = useState(1);
   const { promiseAlert, toastAlert } = useAlerts();
+
+  const {
+    handleSearch,
+    handleSearchOptionChange,
+    handleSearchTermChange,
+    searchResults,
+    searchTerm,
+  } = useSearch();
 
   const clickPage = (index: any) => {
     setPaginateProject(paginateJSON(project, index));
@@ -56,10 +66,26 @@ const Index = () => {
           <h4>RISK REGISTER</h4>
         </div>
         {/* hice esto por que el rows de useDetails siempre mantenia datos ya sea al darle cancel o back y al volver a ingresar persistian los datos en el rows, intente pasarle array vacio setRows([]) y nada */}
-          <button onClick={() => window.location.href = "/create"} className="mb-3 btn btn-primary btn-block">
-            Add New Task <i className="bi bi-plus-lg"></i>
-          </button>
-        
+        <button
+          onClick={() => (window.location.href = "/create")}
+          className="mb-3 btn btn-primary btn-block"
+        >
+          Add New Task <i className="bi bi-plus-lg"></i>
+        </button>
+
+        <Search
+          handleSearch={handleSearch}
+          handleSearchOptionChange={handleSearchOptionChange}
+          handleSearchTermChange={handleSearchTermChange}
+          searchResults={searchResults}
+          searchTerm={searchTerm}
+        ></Search>
+
+        <ul>
+          {searchResults.map((task: any) => (
+            <p>{JSON.stringify(task)}</p>
+          ))}
+        </ul>
 
         <div className="table-container ">
           <table className="table table-table-striped table-hover">
@@ -73,7 +99,7 @@ const Index = () => {
             <tbody>
               {paginateProject.map((project: any, index) => (
                 <tr key={index}>
-                  <td>{project.id}</td>
+                  <td>{project.projectId}</td>
                   <td>{project.project.name}</td>
                   <td>{project.taskId}</td>
                   <td>{project.taskDescription}</td>

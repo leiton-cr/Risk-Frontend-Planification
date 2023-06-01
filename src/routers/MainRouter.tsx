@@ -6,6 +6,7 @@ import LoginGuard from "../guards/LoginGuard";
 import Template from "../shared/components/template/Template";
 import Details from "../pages/details/Details";
 import Matrix from "../pages/matrix/Matrix";
+import AppSelect from "../pages/search/Search";
 
 const MainRouter = () => {
   const router = createBrowserRouter([
@@ -62,6 +63,9 @@ const MainRouter = () => {
         </AuthGuard>
       ),
     },
+    {
+      path: "/search", element: (<AppSelect></AppSelect>)
+    }
   ]);
 
   return <RouterProvider router={router} />;

@@ -17,7 +17,7 @@ const Details = () => {
     handleAdd,
     handleInput,
     handleDelete,
-    handleCreate,
+    handleCreate
   } = useDetails();
 
   const navigate = useNavigate();
