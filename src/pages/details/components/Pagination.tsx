@@ -16,9 +16,10 @@ export default function PaginationCustom({
 }: PaginationCustomProps) {
   const [currentPage, setCurrentPage] = useState<number>(1);
   let startPage: number, endPage: number, records: number;
-  const [defaultStyle] = useState("btn btn-secondary border border-0 btn-sm me-1");
+  const [defaultStyle] = useState(
+    "btn btn-secondary border border-0 btn-sm me-1"
+  );
   records = totalResult;
-
   totalResult = Math.ceil(totalResult / 10);
 
   useEffect(() => {
@@ -57,7 +58,6 @@ export default function PaginationCustom({
     color: "white",
   };
 
-
   return (
     <>
       {totalResult > 1 && (
@@ -74,9 +74,18 @@ export default function PaginationCustom({
             </button>
           )}
           {startPage > 1 && (
-            <button  className={defaultStyle} onClick={() => handlePageChange(1)}>1</button>
+            <button
+              className={defaultStyle}
+              onClick={() => handlePageChange(1)}
+            >
+              1
+            </button>
           )}
-          {startPage > 2 && <button  className={defaultStyle} disabled>...</button>}
+          {startPage > 2 && (
+            <button className={defaultStyle} disabled>
+              ...
+            </button>
+          )}
           {pages.map((page) => (
             <button
               className={defaultStyle}
@@ -87,7 +96,11 @@ export default function PaginationCustom({
               {page}
             </button>
           ))}
-          {endPage < totalResult - 1 && <button   className={defaultStyle} disabled>...</button>}
+          {endPage < totalResult - 1 && (
+            <button className={defaultStyle} disabled>
+              ...
+            </button>
+          )}
           {endPage < totalResult && (
             <button
               className={defaultStyle}

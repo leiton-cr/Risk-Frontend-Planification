@@ -5,14 +5,41 @@ import useFetch from "../../hooks/useFetch";
 import { ENV } from "../../utils/helpers";
 import useSearch from "./useSearch";
 
-// Componente principal
-const App = (
-  handleSearch: any,
-  handleSearchOptionChange: any,
-  handleSearchTermChange: any,
-  searchResults: any,
-  searchTerm: any
-) => {
+const App = () => {
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchOption, setSearchOption] = useState("id");
+  const [searchResults, setSearchResults] = useState(Array<any>);
+  const [project, setProjects] = useState(Array<any>);
+
+  const { getData } = useFetch();
+
+  const handleSearchTermChange = (event: any) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchOptionChange = (option: any) => {
+    setSearchOption(option);
+  };
+
+  const handleSearch = () => {
+    
+    const results = searchTasks(project, searchTerm, searchOption);
+    setSearchResults(results);
+    console.log(searchResults);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getData(`${ENV.BASE_URL}Register`).then((response) => {
+        setProjects(response);
+      });
+    };
+    console.log(project);
+
+    fetchData();
+  },[]);
+
   return (
     <div className="row g-2 mx-autocol-md-12">
       <div className="col-md-5">
@@ -28,10 +55,16 @@ const App = (
         />
       </div>
       <div className="col-md-2">
-        <button className="btn btn-secondary mb-3" onClick={() => handleSearch}>
+        <button className="btn btn-secondary mb-3" onClick={handleSearch}>
           Search
         </button>
       </div>
+      <div>4f9ee4c4-833f-4a71-8a0f-efc23e29e531</div>
+      <ul>
+        {searchResults.map((task) => (
+          <li key={task.id}>{JSON.stringify(task)}</li>
+        ))}
+      </ul>
     </div>
   );
 };

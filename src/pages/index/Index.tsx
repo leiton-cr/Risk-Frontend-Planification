@@ -4,23 +4,42 @@ import useFetch from "../../hooks/useFetch";
 import PaginationCustom from "../details/components/Pagination";
 import { tableHeaders, totalPoints, ENV } from "../../utils/helpers";
 import useAlerts from "../../hooks/useAlerts";
-import Search from "../search/Search";
-import useSearch from "../search/useSearch";
+import { searchTasks } from "../search/searchTasks";
+import { SearchOptionSelect } from "../search/SearchOptionSelect";
 
 const Index = () => {
   const { getData, deleteData } = useFetch();
   const [project, setProjects] = useState([]);
-  const [paginateProject, setPaginateProject] = useState([]);
+  const [paginateProject, setPaginateProject] = useState(Array<any>);
   const [activePage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchOption, setSearchOption] = useState("id");
+  const [searchResults, setSearchResults] = useState(Array<any>);
   const { promiseAlert, toastAlert } = useAlerts();
 
-  const {
-    handleSearch,
-    handleSearchOptionChange,
-    handleSearchTermChange,
-    searchResults,
-    searchTerm,
-  } = useSearch();
+  const handleSearchTermChange = (event: any) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchOptionChange = (option: any) => {
+    setSearchOption(option);
+  };
+
+  const handleSearch = () => {
+    if (!searchTerm) {
+      fetchData();
+    } else {
+      const results = searchTasks(project, searchTerm, searchOption);
+      setSearchResults(results);
+      setPaginateProject(results);
+      console.log(searchResults);
+    }
+  };
+
+  useEffect(() => {
+
+    fetchData();
+  }, []);
 
   const clickPage = (index: any) => {
     setPaginateProject(paginateJSON(project, index));
@@ -44,6 +63,8 @@ const Index = () => {
     return jsonData.slice(startIndex, endIndex);
   };
 
+
+
   const handleDelete = async (id: Number) => {
     promiseAlert("Are you sure?", "This record will be deleted").then(
       async (response) => {
@@ -56,9 +77,7 @@ const Index = () => {
     );
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [project]);
+
   return (
     <>
       <div className="container-fluid px-5">
@@ -73,19 +92,28 @@ const Index = () => {
           Add New Task <i className="bi bi-plus-lg"></i>
         </button>
 
-        <Search
-          handleSearch={handleSearch}
-          handleSearchOptionChange={handleSearchOptionChange}
-          handleSearchTermChange={handleSearchTermChange}
-          searchResults={searchResults}
-          searchTerm={searchTerm}
-        ></Search>
-
-        <ul>
-          {searchResults.map((task: any) => (
-            <p>{JSON.stringify(task)}</p>
-          ))}
-        </ul>
+        <div className="row g-2 mx-autocol-md-12">
+          <div className="col-sm- col-md-3 col-lg-2">
+            <SearchOptionSelect onChange={handleSearchOptionChange} />
+          </div>
+          <div className="col-sm-4 col-md-3 col-lg-2">
+            <input
+              className="form-control mb-3"
+              type="text"
+              value={searchTerm}
+              placeholder="Search Value.."
+              onChange={handleSearchTermChange}
+            />
+          </div>
+          <div className="col-md-1 d-flex">
+            <button className="btn btn-secondary mb-3" onClick={handleSearch}>
+            <i className="bi bi-search"></i>
+            </button>
+            <button className="ms-2 btn btn-secondary mb-3" onClick={fetchData}>
+            <i className="bi bi-arrow-clockwise"></i>
+            </button>
+          </div>
+        </div>
 
         <div className="table-container ">
           <table className="table table-table-striped table-hover">
@@ -105,8 +133,11 @@ const Index = () => {
                   <td>{project.taskDescription}</td>
                   <td>{project.tblDetails.length}</td>
                   <td>{totalPoints(project)}</td>
-                  <td>{project.updatedAt}</td>
-
+                  <td>
+                    {project.updatedAt
+                      ? project.updatedAt.replace("T00:00:00", "")
+                      : ""}
+                  </td>
                   <td>
                     <Link to={`/matrix/${project.id}`}>
                       <button className="btn btn-primary">
@@ -134,7 +165,7 @@ const Index = () => {
             </tbody>
           </table>
           <div>
-            {/* totalresult project.details.length() */}
+            {/* totalresult project.length() */}
             <PaginationCustom
               totalResult={project.length}
               maxButtons={5}

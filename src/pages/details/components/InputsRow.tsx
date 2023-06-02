@@ -40,6 +40,7 @@ const InputsRow = ({ state, handleInput, handleDelete, index }: Props) => {
           id="probability"
           onInput={handleInput}
           size={"200px"}
+          isColorized={true}
         />
       </td>
       <td>
@@ -48,6 +49,7 @@ const InputsRow = ({ state, handleInput, handleDelete, index }: Props) => {
           id="impact"
           onInput={handleInput}
           size={"200px"}
+          isColorized={true}
         />
       </td>
       <td>

@@ -7,7 +7,8 @@ interface Props {
   id: string;
   state: string;
   onInput: FormEventHandler;
-  size?:string;
+  size?: string;
+  isColorized?: boolean;
 }
 
 const pluralizeMap: any = {
@@ -17,8 +18,23 @@ const pluralizeMap: any = {
   project: "projects",
 };
 
-const FetchSelect = ({ id, state, onInput, size}: Props) => {
+const FetchSelect = ({ id, state, onInput, size, isColorized }: Props) => {
   const pluralId = pluralizeMap[id];
+  const [selectedOption, setSelectedOption] = useState("");
+  const handleInputChange = (event: any) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const getBorderColor = () => {
+    const colors = ["#3AB34A", "#2F903B", "#F8EB10", "#F79122", "#BB121A"];
+    if (selectedOption !== "") {
+      return colors[parseInt(selectedOption) - 1];
+    } else {
+      const index = parseInt(state) % 5;
+
+      return colors[index - 1];
+    }
+  };
 
   const { getData } = useFetch();
   const [options, setOptions] = useState([]);
@@ -31,10 +47,16 @@ const FetchSelect = ({ id, state, onInput, size}: Props) => {
 
   return (
     <select
-      style={{ width: size}}
+      style={{
+        width: size,
+        border: isColorized ? `1px solid ${getBorderColor()}` : "",
+      }}
       className="form-select"
       value={state}
-      onChange={onInput}
+      onChange={(event) => {
+        onInput(event);
+        handleInputChange(event);
+      }}
       id={id}
     >
       <option disabled={true} value={"-1"}>
@@ -42,7 +64,7 @@ const FetchSelect = ({ id, state, onInput, size}: Props) => {
       </option>
       {options.map((option: { id: string; name: string }, i) => (
         <option key={i} value={option.id}>
-          {option.name}
+          {i + 1 + " - " + option.name}
         </option>
       ))}
     </select>
@@ -106,4 +128,3 @@ export default FetchSelect;
 //     </div>
 //   );
 // };
-

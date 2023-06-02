@@ -94,10 +94,10 @@ const Details = () => {
         </button>
       </div>
 
-      <div className="table-container">
-        <table className="table  table-responsive">
+      <div className="table-container ">
+        <table className="table  table-responsive ">
           <TableHead headers={creationHeaders} />
-          <tbody className="table table-hover">
+          <tbody className="table table-hover ">
             {rows.map((row, i) => (
               <InputsRow
                 state={row}
