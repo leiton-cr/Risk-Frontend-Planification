@@ -21,7 +21,7 @@ const Template = ({ title, children }: Props) => {
           <i className="fs-4 bi bi-box-arrow-right"></i> Logout{" "}
         </label>
       </Header>
-      <div className="vh-100">{children}</div>
+      <div>{children}</div>
       <footer>
         &copy; {new Date().getFullYear()} - Luis Leiton & Steven Rojas
       </footer>
