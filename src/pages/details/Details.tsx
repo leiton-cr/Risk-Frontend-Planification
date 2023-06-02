@@ -4,7 +4,7 @@ import InputsRow from "./components/InputsRow";
 import { creationHeaders } from "../../utils/helpers";
 import "./details.css";
 import useDetails from "./useDetails";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 const Details = () => {
   const {

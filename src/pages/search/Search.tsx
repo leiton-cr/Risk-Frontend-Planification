@@ -3,7 +3,6 @@ import { SearchOptionSelect } from "./SearchOptionSelect";
 import { searchTasks } from "./searchTasks";
 import useFetch from "../../hooks/useFetch";
 import { ENV } from "../../utils/helpers";
-import useSearch from "./useSearch";
 
 const App = () => {
 

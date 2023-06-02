@@ -21,15 +21,10 @@ const Template = ({ title, children }: Props) => {
           <i className="fs-4 bi bi-box-arrow-right"></i> Logout{" "}
         </label>
       </Header>
-      {/* <header className='template_header'>
-                <h1 className='template_title'>{title}</h1>
-                <div className='header_logo'>
-                    <button onClick={logout}>Logout</button>
-                    <img src={icon} className='template_image'/>
-                </div>
-            </header> */}
-      {children}
-      <footer>&copy; Copyright 2023</footer>
+      <div className="vh-100">{children}</div>
+      <footer>
+        &copy; {new Date().getFullYear()} - Luis Leiton & Steven Rojas
+      </footer>
     </>
   );
 };

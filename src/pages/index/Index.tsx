@@ -14,8 +14,9 @@ const Index = () => {
   const [activePage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOption, setSearchOption] = useState("id");
-  const [searchResults, setSearchResults] = useState(Array<any>);
   const { promiseAlert, toastAlert } = useAlerts();
+
+  const [pages, setPages] = useState(0);
 
   const handleSearchTermChange = (event: any) => {
     setSearchTerm(event.target.value);
@@ -30,16 +31,10 @@ const Index = () => {
       fetchData();
     } else {
       const results = searchTasks(project, searchTerm, searchOption);
-      setSearchResults(results);
       setPaginateProject(results);
-      console.log(searchResults);
+      setPages(results.length);
     }
   };
-
-  useEffect(() => {
-
-    fetchData();
-  }, []);
 
   const clickPage = (index: any) => {
     setPaginateProject(paginateJSON(project, index));
@@ -63,8 +58,6 @@ const Index = () => {
     return jsonData.slice(startIndex, endIndex);
   };
 
-
-
   const handleDelete = async (id: Number) => {
     promiseAlert("Are you sure?", "This record will be deleted").then(
       async (response) => {
@@ -77,6 +70,13 @@ const Index = () => {
     );
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setPages(project.length);
+  }, [project]);
 
   return (
     <>
@@ -84,7 +84,6 @@ const Index = () => {
         <div className="my-3">
           <h4>RISK REGISTER</h4>
         </div>
-        {/* hice esto por que el rows de useDetails siempre mantenia datos ya sea al darle cancel o back y al volver a ingresar persistian los datos en el rows, intente pasarle array vacio setRows([]) y nada */}
         <button
           onClick={() => (window.location.href = "/create")}
           className="mb-3 btn btn-primary btn-block"
@@ -107,10 +106,10 @@ const Index = () => {
           </div>
           <div className="col-md-1 d-flex">
             <button className="btn btn-secondary mb-3" onClick={handleSearch}>
-            <i className="bi bi-search"></i>
+              <i className="bi bi-search"></i>
             </button>
             <button className="ms-2 btn btn-secondary mb-3" onClick={fetchData}>
-            <i className="bi bi-arrow-clockwise"></i>
+              <i className="bi bi-arrow-clockwise"></i>
             </button>
           </div>
         </div>
@@ -165,9 +164,8 @@ const Index = () => {
             </tbody>
           </table>
           <div>
-            {/* totalresult project.length() */}
             <PaginationCustom
-              totalResult={project.length}
+              totalResult={pages}
               maxButtons={5}
               onPageChange={clickPage}
               activePage={activePage}
