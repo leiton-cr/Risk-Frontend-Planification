@@ -26,7 +26,7 @@ export const emptyRowData = {
   },
   priority: {
     id: "-1",
-    val: "",
+    val: "-1",
   },
   points: {
     id: "-1",

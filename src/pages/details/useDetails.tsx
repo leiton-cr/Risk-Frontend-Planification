@@ -46,12 +46,13 @@ const useDetails = () => {
     if (id) {
       setActionType("edit");
     }
-    setRows([emptyRowData]);
+    setRows([JSON.parse(JSON.stringify(emptyRowData))]);
   }, []);
 
   const handleAdd = () => {
     setRows([...rows, editRow]);
     setEditRow(JSON.parse(JSON.stringify(emptyRowData)));
+    console.log(emptyRowData);
   };
 
   const handleDelete = (index: number, id: number) => {
@@ -115,6 +116,8 @@ const useDetails = () => {
   };
 
   const handleCreate = async () => {
+    const register = createRegister(head, rows);
+    console.log(register);
     try {
       const register = createRegister(head, rows);
       const url = id
@@ -152,7 +155,7 @@ const useDetails = () => {
       promiseAlert("Are you sure?", "Unsaved changes will be lost.").then(
         ({ isConfirmed }) => {
           if (isConfirmed) {
-            setRows([emptyRowData]);
+            setRows([JSON.parse(JSON.stringify(emptyRowData))]);
             setEditRow([]);
             navigate("/");
           }
@@ -166,7 +169,7 @@ const useDetails = () => {
 
       promiseAlert("Are you sure?", "Unsaved changes will be lost.").then(
         ({ isConfirmed }) => {
-          setRows([emptyRowData]);
+          setRows([JSON.parse(JSON.stringify(emptyRowData))]);
           setEditRow([]);
           if (isConfirmed) {
             navigate("/");

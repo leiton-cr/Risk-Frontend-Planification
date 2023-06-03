@@ -64,7 +64,7 @@ const FetchSelect = ({ id, state, onInput, size, isColorized }: Props) => {
       </option>
       {options.map((option: { id: string; name: string }, i) => (
         <option key={i} value={option.id}>
-          {i + 1 + " - " + option.name}
+          {option.name}
         </option>
       ))}
     </select>

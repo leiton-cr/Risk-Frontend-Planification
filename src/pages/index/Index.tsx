@@ -15,7 +15,6 @@ const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOption, setSearchOption] = useState("id");
   const { promiseAlert, toastAlert } = useAlerts();
-
   const [pages, setPages] = useState(0);
 
   const handleSearchTermChange = (event: any) => {
@@ -47,7 +46,7 @@ const Index = () => {
     });
   };
 
-  const paginateJSON = (jsonData: any, page: number = 1) => {
+  const paginateJSON = (jsonData: any, page: number = 1) => { 
     const resultsPerPage = 10;
     const startIndex = (page - 1) * resultsPerPage;
     const endIndex = startIndex + resultsPerPage;

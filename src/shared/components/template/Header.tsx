@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import useStorage from "../../../hooks/useStorage";
+
 
 interface Props {
   children: ReactElement;
@@ -8,10 +8,6 @@ interface Props {
 }
 
 const Header = ({ title, children, icon }: Props) => {
-  //const { getItem } = useStorage();
-
-  //const token = getItem("token");
-
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top navbar-scroll shadow">
